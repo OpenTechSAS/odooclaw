@@ -1,0 +1,65 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: ${DB_MEMORY_LIMIT:-1G}
+    restart: unless-stopped
+
+  web:
+    build: .
+    depends_on:
+      - db
+    environment:
+      - HOST=db
+      - USER=odoo
+      - PASSWORD=odoo
+      - WORKERS_COUNT=${WORKERS:-3}
+      - MEM_SOFT_LIMIT=${MEM_SOFT:-1288490188}
+      - MEM_HARD_LIMIT=${MEM_HARD:-1610612736}
+      - TIME_CPU_LIMIT=${TIME_CPU:-86400}
+      - TIME_REAL_LIMIT=${TIME_REAL:-86400}
+    volumes:
+      - web_data:/var/lib/odoo
+      - ./odoo.conf:/etc/odoo/odoo.conf
+      - ./addons:/mnt/extra-addons
+    # Agregamos las credenciales de la DB explícitamente en el comando
+    entrypoint: >
+      /bin/sh -c "odoo --db_host=$$HOST --db_user=$$USER --db_password=$$PASSWORD --proxy-mode 
+      --workers=$$WORKERS_COUNT 
+      --limit-memory-soft=$$MEM_SOFT_LIMIT 
+      --limit-memory-hard=$$MEM_HARD_LIMIT 
+      --limit-time-cpu=$$TIME_CPU_LIMIT 
+      --limit-time-real=$$TIME_REAL_LIMIT"
+    deploy:
+      resources:
+        limits:
+          cpus: '${CPU_LIMIT:-2.0}'
+          memory: ${WEB_MEMORY_LIMIT:-2.5G}
+    expose:
+      - "8069"
+      - "8072"
+    restart: unless-stopped
+
+  proxy:
+    image: nginx:alpine
+    depends_on:
+      - web
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    environment:
+      - FORCE_RESTART=${RESTART_ID:-v_final_fix}
+    expose:
+      - "80"
+    restart: unless-stopped
+
+volumes:
+  web_data:
+  db_data:
