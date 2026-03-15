@@ -1,7 +1,6 @@
 services:
   # ─────────────────────────────────────────────
   # OdooClaw Agent (one-shot query)
-  #   docker compose -f docker/docker-compose.yml run --rm odooclaw-agent -m "Hello"
   # ─────────────────────────────────────────────
   odooclaw-agent:
     build:
@@ -11,16 +10,12 @@ services:
     profiles:
       - agent
     environment:
-      - ODOOCLAW_AGENTS_DEFAULTS_PROVIDER
-      - ODOOCLAW_AGENTS_DEFAULTS_MODEL
-      - ODOOCLAW_PROVIDERS_ANTHROPIC_API_KEY
+      - ANTHROPIC_API_KEY
       - ODOO_URL
       - ODOO_DB
       - ODOO_USERNAME
       - ODOO_PASSWORD
-    # Uncomment to access host network; leave commented unless needed.
-    #extra_hosts:
-    #  - "host.docker.internal:host-gateway"
+      - ODOOCLAW_CONFIG=/root/.odooclaw/config.json
     volumes:
       - ./data:/root/.odooclaw
       - ../config/config.json:/root/.odooclaw/config.json
@@ -30,7 +25,6 @@ services:
 
   # ─────────────────────────────────────────────
   # OdooClaw Gateway (Long-running Bot)
-  #   docker compose -f docker/docker-compose.yml up odooclaw-gateway
   # ─────────────────────────────────────────────
   odooclaw-gateway:
     build:
@@ -41,22 +35,13 @@ services:
     profiles:
       - gateway
     environment:
-      - ODOOCLAW_CHANNELS_ODOO_ENABLED
-      - ODOOCLAW_CHANNELS_ODOO_WEBHOOK_HOST
-      - ODOOCLAW_CHANNELS_ODOO_WEBHOOK_PORT
-      - ODOOCLAW_CHANNELS_ODOO_WEBHOOK_PATH
-      - ODOOCLAW_AGENTS_DEFAULTS_PROVIDER
-      - ODOOCLAW_AGENTS_DEFAULTS_MODEL
-      - ODOOCLAW_PROVIDERS_ANTHROPIC_API_KEY
+      - ANTHROPIC_API_KEY
       - ODOO_URL
       - ODOO_DB
       - ODOO_USERNAME
       - ODOO_PASSWORD
-      - ODOOCLAW_MODELS_0_ID
-      - ODOOCLAW_MODELS_0_PROVIDER
-    # Uncomment to access host network; leave commented unless needed.
-    #extra_hosts:
-    #  - "host.docker.internal:host-gateway"
+      - ODOOCLAW_CONFIG=/root/.odooclaw/config.json
+      - COMPOSE_PROFILES=gateway
     volumes:
       - ./data:/root/.odooclaw
-      
+      - ../config/config.json:/root/.odooclaw/config.json
