@@ -13,28 +13,20 @@
     {
       "model_name": "claude-3-5-sonnet",
       "model": "anthropic/claude-3-5-sonnet-20240620",
-      "provider": "anthropic",
-      "api_key": "" 
+      "provider": "anthropic"
     }
   ],
+  "providers": {
+    "anthropic": {
+      "api_key": ""
+    }
+  },
   "channels": {
     "odoo": {
       "enabled": true,
       "webhook_host": "0.0.0.0",
       "webhook_port": 18790,
       "webhook_path": "/webhook/odoo"
-    }
-  },
-  "tools": {
-    "mcp": {
-      "enabled": true,
-      "servers": {
-        "odoo-manager": {
-          "enabled": true,
-          "command": "python3",
-          "args": ["/usr/local/bin/odoo-mcp.py"]
-        }
-      }
     }
   },
   "gateway": {
