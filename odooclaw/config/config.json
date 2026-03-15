@@ -13,7 +13,8 @@
     {
       "model_name": "claude-3-5-sonnet",
       "model": "anthropic/claude-3-5-sonnet-20240620",
-      "provider": "anthropic"
+      "provider": "anthropic",
+      "api_key": "" 
     }
   ],
   "channels": {
