@@ -3,6 +3,8 @@
     "defaults": {
       "workspace": "/home/odooclaw/.odooclaw/workspace",
       "restrict_to_workspace": true,
+      "provider": "ollama",
+      "model_name": "llama3.2",
       "max_tokens": 1024,
       "max_tool_iterations": 10
     }
