@@ -10,6 +10,14 @@ services:
     container_name: odooclaw-agent
     profiles:
       - agent
+    environment:
+      - ODOOCLAW_AGENTS_DEFAULTS_PROVIDER
+      - ODOOCLAW_AGENTS_DEFAULTS_MODEL
+      - ODOOCLAW_PROVIDERS_ANTHROPIC_API_KEY
+      - ODOO_URL
+      - ODOO_DB
+      - ODOO_USERNAME
+      - ODOO_PASSWORD
     # Uncomment to access host network; leave commented unless needed.
     #extra_hosts:
     #  - "host.docker.internal:host-gateway"
@@ -31,6 +39,18 @@ services:
     restart: on-failure
     profiles:
       - gateway
+    environment:
+      - ODOOCLAW_CHANNELS_ODOO_ENABLED
+      - ODOOCLAW_CHANNELS_ODOO_WEBHOOK_HOST
+      - ODOOCLAW_CHANNELS_ODOO_WEBHOOK_PORT
+      - ODOOCLAW_CHANNELS_ODOO_WEBHOOK_PATH
+      - ODOOCLAW_AGENTS_DEFAULTS_PROVIDER
+      - ODOOCLAW_AGENTS_DEFAULTS_MODEL
+      - ODOOCLAW_PROVIDERS_ANTHROPIC_API_KEY
+      - ODOO_URL
+      - ODOO_DB
+      - ODOO_USERNAME
+      - ODOO_PASSWORD
     # Uncomment to access host network; leave commented unless needed.
     #extra_hosts:
     #  - "host.docker.internal:host-gateway"
