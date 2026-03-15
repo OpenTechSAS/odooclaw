@@ -440,6 +440,54 @@ type ProvidersConfig struct {
 	Mistral       ProviderConfig       `json:"mistral"        envPrefix:"ODOOCLAW_PROVIDERS_MISTRAL_"`
 }
 
+// loadFromEnv explicitly reads provider configuration from environment variables.
+// This is needed because env.Parse may not recurse into ProvidersConfig when the
+// parent Config.Providers field has no env/envPrefix tag.
+func (p *ProvidersConfig) loadFromEnv() {
+	set := func(dest *string, key string) {
+		if v := os.Getenv(key); v != "" {
+			*dest = v
+		}
+	}
+	set(&p.Anthropic.APIKey, "ODOOCLAW_PROVIDERS_ANTHROPIC_API_KEY")
+	set(&p.Anthropic.APIBase, "ODOOCLAW_PROVIDERS_ANTHROPIC_API_BASE")
+	set(&p.OpenAI.APIKey, "ODOOCLAW_PROVIDERS_OPENAI_API_KEY")
+	set(&p.OpenAI.APIBase, "ODOOCLAW_PROVIDERS_OPENAI_API_BASE")
+	set(&p.LiteLLM.APIKey, "ODOOCLAW_PROVIDERS_LITELLM_API_KEY")
+	set(&p.LiteLLM.APIBase, "ODOOCLAW_PROVIDERS_LITELLM_API_BASE")
+	set(&p.OpenRouter.APIKey, "ODOOCLAW_PROVIDERS_OPENROUTER_API_KEY")
+	set(&p.OpenRouter.APIBase, "ODOOCLAW_PROVIDERS_OPENROUTER_API_BASE")
+	set(&p.Groq.APIKey, "ODOOCLAW_PROVIDERS_GROQ_API_KEY")
+	set(&p.Groq.APIBase, "ODOOCLAW_PROVIDERS_GROQ_API_BASE")
+	set(&p.Zhipu.APIKey, "ODOOCLAW_PROVIDERS_ZHIPU_API_KEY")
+	set(&p.Zhipu.APIBase, "ODOOCLAW_PROVIDERS_ZHIPU_API_BASE")
+	set(&p.VLLM.APIKey, "ODOOCLAW_PROVIDERS_VLLM_API_KEY")
+	set(&p.VLLM.APIBase, "ODOOCLAW_PROVIDERS_VLLM_API_BASE")
+	set(&p.Gemini.APIKey, "ODOOCLAW_PROVIDERS_GEMINI_API_KEY")
+	set(&p.Gemini.APIBase, "ODOOCLAW_PROVIDERS_GEMINI_API_BASE")
+	set(&p.Nvidia.APIKey, "ODOOCLAW_PROVIDERS_NVIDIA_API_KEY")
+	set(&p.Nvidia.APIBase, "ODOOCLAW_PROVIDERS_NVIDIA_API_BASE")
+	set(&p.Ollama.APIKey, "ODOOCLAW_PROVIDERS_OLLAMA_API_KEY")
+	set(&p.Ollama.APIBase, "ODOOCLAW_PROVIDERS_OLLAMA_API_BASE")
+	set(&p.Moonshot.APIKey, "ODOOCLAW_PROVIDERS_MOONSHOT_API_KEY")
+	set(&p.Moonshot.APIBase, "ODOOCLAW_PROVIDERS_MOONSHOT_API_BASE")
+	set(&p.ShengSuanYun.APIKey, "ODOOCLAW_PROVIDERS_SHENGSUANYUN_API_KEY")
+	set(&p.ShengSuanYun.APIBase, "ODOOCLAW_PROVIDERS_SHENGSUANYUN_API_BASE")
+	set(&p.DeepSeek.APIKey, "ODOOCLAW_PROVIDERS_DEEPSEEK_API_KEY")
+	set(&p.DeepSeek.APIBase, "ODOOCLAW_PROVIDERS_DEEPSEEK_API_BASE")
+	set(&p.Cerebras.APIKey, "ODOOCLAW_PROVIDERS_CEREBRAS_API_KEY")
+	set(&p.Cerebras.APIBase, "ODOOCLAW_PROVIDERS_CEREBRAS_API_BASE")
+	set(&p.VolcEngine.APIKey, "ODOOCLAW_PROVIDERS_VOLCENGINE_API_KEY")
+	set(&p.VolcEngine.APIBase, "ODOOCLAW_PROVIDERS_VOLCENGINE_API_BASE")
+	set(&p.GitHubCopilot.APIKey, "ODOOCLAW_PROVIDERS_GITHUB_COPILOT_API_KEY")
+	set(&p.GitHubCopilot.APIBase, "ODOOCLAW_PROVIDERS_GITHUB_COPILOT_API_BASE")
+	set(&p.Antigravity.APIKey, "ODOOCLAW_PROVIDERS_ANTIGRAVITY_API_KEY")
+	set(&p.Qwen.APIKey, "ODOOCLAW_PROVIDERS_QWEN_API_KEY")
+	set(&p.Qwen.APIBase, "ODOOCLAW_PROVIDERS_QWEN_API_BASE")
+	set(&p.Mistral.APIKey, "ODOOCLAW_PROVIDERS_MISTRAL_API_KEY")
+	set(&p.Mistral.APIBase, "ODOOCLAW_PROVIDERS_MISTRAL_API_BASE")
+}
+
 // IsEmpty checks if all provider configs are empty (no API keys or API bases set)
 // Note: WebSearch is an optimization option and doesn't count as "non-empty"
 func (p ProvidersConfig) IsEmpty() bool {
@@ -679,6 +727,9 @@ func LoadConfig(path string) (*Config, error) {
 	if err := env.Parse(cfg); err != nil {
 		return nil, err
 	}
+
+	// Explicitly read provider env vars (env.Parse may not recurse into ProvidersConfig)
+	cfg.Providers.loadFromEnv()
 
 	// Migrate legacy channel config fields to new unified structures
 	cfg.migrateChannelConfigs()
