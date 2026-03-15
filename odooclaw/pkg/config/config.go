@@ -734,9 +734,20 @@ func LoadConfig(path string) (*Config, error) {
 	// Migrate legacy channel config fields to new unified structures
 	cfg.migrateChannelConfigs()
 
-	// Auto-migrate: if only legacy providers config exists, convert to model_list
-	if len(cfg.ModelList) == 0 && cfg.HasProvidersConfig() {
-		cfg.ModelList = ConvertProvidersToModelList(cfg)
+	// Auto-migrate: merge any provider-configured models not already in model_list.
+	// This runs regardless of model_list size so that ODOOCLAW_PROVIDERS_*_API_KEY
+	// env vars always add the user's configured model even when model_list is
+	// pre-populated by defaults (e.g. from odooclaw onboard).
+	if cfg.HasProvidersConfig() {
+		existingNames := make(map[string]bool)
+		for _, m := range cfg.ModelList {
+			existingNames[m.ModelName] = true
+		}
+		for _, pm := range ConvertProvidersToModelList(cfg) {
+			if !existingNames[pm.ModelName] {
+				cfg.ModelList = append(cfg.ModelList, pm)
+			}
+		}
 	}
 
 	// Validate model_list for uniqueness and required fields
