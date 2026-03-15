@@ -419,25 +419,25 @@ type DevicesConfig struct {
 }
 
 type ProvidersConfig struct {
-	Anthropic	  ProviderConfig		`json:"anthropic" envPrefix:"ODOOCLAW_PROVIDERS_ANTHROPIC_"`
-	OpenAI        OpenAIProviderConfig `json:"openai"`
-	LiteLLM       ProviderConfig       `json:"litellm"`
-	OpenRouter    ProviderConfig       `json:"openrouter"`
-	Groq          ProviderConfig       `json:"groq"`
-	Zhipu         ProviderConfig       `json:"zhipu"`
-	VLLM          ProviderConfig       `json:"vllm"`
-	Gemini        ProviderConfig       `json:"gemini"`
-	Nvidia        ProviderConfig       `json:"nvidia"`
-	Ollama        ProviderConfig       `json:"ollama"`
-	Moonshot      ProviderConfig       `json:"moonshot"`
-	ShengSuanYun  ProviderConfig       `json:"shengsuanyun"`
-	DeepSeek      ProviderConfig       `json:"deepseek"`
-	Cerebras      ProviderConfig       `json:"cerebras"`
-	VolcEngine    ProviderConfig       `json:"volcengine"`
-	GitHubCopilot ProviderConfig       `json:"github_copilot"`
-	Antigravity   ProviderConfig       `json:"antigravity"`
-	Qwen          ProviderConfig       `json:"qwen"`
-	Mistral       ProviderConfig       `json:"mistral"`
+	Anthropic     ProviderConfig       `json:"anthropic"      envPrefix:"ODOOCLAW_PROVIDERS_ANTHROPIC_"`
+	OpenAI        OpenAIProviderConfig `json:"openai"         envPrefix:"ODOOCLAW_PROVIDERS_OPENAI_"`
+	LiteLLM       ProviderConfig       `json:"litellm"        envPrefix:"ODOOCLAW_PROVIDERS_LITELLM_"`
+	OpenRouter    ProviderConfig       `json:"openrouter"     envPrefix:"ODOOCLAW_PROVIDERS_OPENROUTER_"`
+	Groq          ProviderConfig       `json:"groq"           envPrefix:"ODOOCLAW_PROVIDERS_GROQ_"`
+	Zhipu         ProviderConfig       `json:"zhipu"          envPrefix:"ODOOCLAW_PROVIDERS_ZHIPU_"`
+	VLLM          ProviderConfig       `json:"vllm"           envPrefix:"ODOOCLAW_PROVIDERS_VLLM_"`
+	Gemini        ProviderConfig       `json:"gemini"         envPrefix:"ODOOCLAW_PROVIDERS_GEMINI_"`
+	Nvidia        ProviderConfig       `json:"nvidia"         envPrefix:"ODOOCLAW_PROVIDERS_NVIDIA_"`
+	Ollama        ProviderConfig       `json:"ollama"         envPrefix:"ODOOCLAW_PROVIDERS_OLLAMA_"`
+	Moonshot      ProviderConfig       `json:"moonshot"       envPrefix:"ODOOCLAW_PROVIDERS_MOONSHOT_"`
+	ShengSuanYun  ProviderConfig       `json:"shengsuanyun"   envPrefix:"ODOOCLAW_PROVIDERS_SHENGSUANYUN_"`
+	DeepSeek      ProviderConfig       `json:"deepseek"       envPrefix:"ODOOCLAW_PROVIDERS_DEEPSEEK_"`
+	Cerebras      ProviderConfig       `json:"cerebras"       envPrefix:"ODOOCLAW_PROVIDERS_CEREBRAS_"`
+	VolcEngine    ProviderConfig       `json:"volcengine"     envPrefix:"ODOOCLAW_PROVIDERS_VOLCENGINE_"`
+	GitHubCopilot ProviderConfig       `json:"github_copilot" envPrefix:"ODOOCLAW_PROVIDERS_GITHUB_COPILOT_"`
+	Antigravity   ProviderConfig       `json:"antigravity"    envPrefix:"ODOOCLAW_PROVIDERS_ANTIGRAVITY_"`
+	Qwen          ProviderConfig       `json:"qwen"           envPrefix:"ODOOCLAW_PROVIDERS_QWEN_"`
+	Mistral       ProviderConfig       `json:"mistral"        envPrefix:"ODOOCLAW_PROVIDERS_MISTRAL_"`
 }
 
 // IsEmpty checks if all provider configs are empty (no API keys or API bases set)
