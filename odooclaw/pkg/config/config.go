@@ -419,7 +419,7 @@ type DevicesConfig struct {
 }
 
 type ProvidersConfig struct {
-	Anthropic     ProviderConfig       `json:"anthropic"`
+	Anthropic	  ProviderConfig		`json:"anthropic" envPrefix:"ODOOCLAW_PROVIDERS_ANTHROPIC_"`
 	OpenAI        OpenAIProviderConfig `json:"openai"`
 	LiteLLM       ProviderConfig       `json:"litellm"`
 	OpenRouter    ProviderConfig       `json:"openrouter"`
