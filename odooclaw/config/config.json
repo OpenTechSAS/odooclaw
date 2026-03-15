@@ -1,7 +1,7 @@
 {
   "agents": {
     "defaults": {
-      "workspace": "~/.odooclaw/workspace",
+      "workspace": "/root/.odooclaw/workspace",
       "restrict_to_workspace": true,
       "model_name": "claude-3-5-sonnet",
       "max_tokens": 8192,
@@ -13,7 +13,7 @@
     {
       "model_name": "claude-3-5-sonnet",
       "model": "anthropic/claude-3-5-sonnet-20240620",
-      "api_key": "AQUI_TU_API_KEY_DE_ANTHROPIC",
+      "api_key": "${ANTHROPIC_API_KEY}",
       "api_base": "https://api.anthropic.com/v1"
     }
   ],
@@ -25,15 +25,17 @@
       "webhook_path": "/webhook/odoo"
     }
   },
-  "providers": {},
   "tools": {
     "mcp": {
-      "enabled": false
+      "enabled": true,
+      "servers": {
+        "odoo-manager": {
+          "enabled": true,
+          "command": "python3",
+          "args": ["/usr/local/bin/odoo-mcp.py"]
+        }
+      }
     }
-  },
-  "heartbeat": {
-    "enabled": true,
-    "interval": 30
   },
   "gateway": {
     "host": "0.0.0.0",
