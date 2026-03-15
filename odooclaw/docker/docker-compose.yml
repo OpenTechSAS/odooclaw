@@ -4,7 +4,9 @@ services:
   #   docker compose -f docker/docker-compose.yml run --rm odooclaw-agent -m "Hello"
   # ─────────────────────────────────────────────
   odooclaw-agent:
-    image: docker.io/nicolasramos/odooclaw:latest
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
     container_name: odooclaw-agent
     profiles:
       - agent
@@ -22,7 +24,9 @@ services:
   #   docker compose -f docker/docker-compose.yml up odooclaw-gateway
   # ─────────────────────────────────────────────
   odooclaw-gateway:
-    image: docker.io/nicolasramos/odooclaw:latest
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
     container_name: odooclaw-gateway
     restart: on-failure
     profiles:
