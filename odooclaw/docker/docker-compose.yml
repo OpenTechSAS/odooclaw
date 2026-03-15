@@ -14,7 +14,7 @@ services:
       - gateway
     environment:
       - HOME=/home/odooclaw
-      - ODOOCLAW_MODEL_LIST_0_API_KEY
+      - ODOOCLAW_PROVIDERS_ANTHROPIC_API_KEY
       - ODOO_URL
       - ODOO_DB
       - ODOO_USERNAME
