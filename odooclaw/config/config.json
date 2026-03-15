@@ -1,7 +1,7 @@
 {
   "agents": {
     "defaults": {
-      "workspace": "/root/.odooclaw/workspace",
+      "workspace": "/home/odooclaw/.odooclaw/workspace",
       "restrict_to_workspace": true,
       "model_name": "claude-3-5-sonnet",
       "max_tokens": 8192,
