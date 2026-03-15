@@ -15,10 +15,10 @@ services:
       - ODOO_DB
       - ODOO_USERNAME
       - ODOO_PASSWORD
-      - ODOOCLAW_CONFIG=/root/.odooclaw/config.json
+      - ODOOCLAW_CONFIG=/home/odooclaw/.odooclaw/config.json
     volumes:
-      - ./data:/root/.odooclaw
-      - ../config/config.json:/root/.odooclaw/config.json
+      - ./data:/home/odooclaw/.odooclaw
+      - ../config/config.json:/home/odooclaw/.odooclaw/config.json
     entrypoint: [ "odooclaw", "agent" ]
     stdin_open: true
     tty: true
@@ -40,8 +40,8 @@ services:
       - ODOO_DB
       - ODOO_USERNAME
       - ODOO_PASSWORD
-      - ODOOCLAW_CONFIG=/root/.odooclaw/config.json
+      - ODOOCLAW_CONFIG=/home/odooclaw/.odooclaw/config.json
       - COMPOSE_PROFILES=gateway
     volumes:
-      - ./data:/root/.odooclaw
-      - ../config/config.json:/root/.odooclaw/config.json
+      - ./data:/home/odooclaw/.odooclaw
+      - ../config/config.json:/home/odooclaw/.odooclaw/config.json
