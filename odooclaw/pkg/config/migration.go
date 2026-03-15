@@ -384,7 +384,8 @@ func ConvertProvidersToModelList(cfg *Config) []ModelConfig {
 
 		// Check if this is the user's configured provider
 		if slices.Contains(m.providerNames, userProvider) && userModel != "" {
-			// Use the user's configured model instead of default
+			// Use the user's configured model name so GetModelConfig(userModel) can find it
+			mc.ModelName = userModel
 			mc.Model = buildModelWithProtocol(m.protocol, userModel)
 		} else if userProvider == "" && userModel != "" && !legacyModelNameApplied {
 			// Legacy config: no explicit provider field but model is specified
