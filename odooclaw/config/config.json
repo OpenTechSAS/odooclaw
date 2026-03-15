@@ -4,19 +4,11 @@
       "workspace": "/home/odooclaw/.odooclaw/workspace",
       "restrict_to_workspace": true,
       "provider": "groq",
-      "model_name": "llama-3.2-3b",
+      "model_name": "llama-3.2-3b-preview",
       "max_tokens": 1024,
       "max_tool_iterations": 10
     }
   },
-  "model_list": [
-    {
-      "model_name": "llama-3.2-3b",
-      "model": "groq/llama-3.2-3b-preview",
-      "api_base": "https://api.groq.com/openai/v1",
-      "api_key": ""
-    }
-  ],
   "channels": {
     "odoo": {
       "enabled": true,
