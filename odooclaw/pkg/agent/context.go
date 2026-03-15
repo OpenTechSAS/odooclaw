@@ -104,7 +104,11 @@ func (cb *ContextBuilder) BuildSystemPrompt() string {
 	}
 
 	// Skills - show summary, AI can read full content with read_file tool
-	skillsSummary := cb.skillsLoader.BuildSkillsSummary()
+	// Set ODOOCLAW_SKILLS_IN_PROMPT=false to omit skills (reduces token usage for smaller models)
+	skillsSummary := ""
+	if os.Getenv("ODOOCLAW_SKILLS_IN_PROMPT") != "false" {
+		skillsSummary = cb.skillsLoader.BuildSkillsSummary()
+	}
 	if skillsSummary != "" {
 		parts = append(parts, fmt.Sprintf(`# Skills
 
