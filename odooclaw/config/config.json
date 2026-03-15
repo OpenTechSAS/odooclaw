@@ -4,7 +4,7 @@
       "workspace": "/home/odooclaw/.odooclaw/workspace",
       "restrict_to_workspace": true,
       "provider": "anthropic",
-      "model_name": "claude-3-5-sonnet-20241022",
+      "model_name": "claude-sonnet-4-6",
       "max_tokens": 8192,
       "temperature": 0.7,
       "max_tool_iterations": 20
