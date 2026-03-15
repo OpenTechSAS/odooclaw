@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd:*)",
+      "Read(//usr/local/go/bin/**)",
+      "Read(//c/Go/bin/**)"
+    ]
+  }
+}
