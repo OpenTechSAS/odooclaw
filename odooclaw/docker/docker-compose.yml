@@ -1,29 +1,5 @@
 services:
   # ─────────────────────────────────────────────
-  # OdooClaw Agent (one-shot query)
-  # ─────────────────────────────────────────────
-  odooclaw-agent:
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile
-    container_name: odooclaw-agent
-    profiles:
-      - agent
-    environment:
-      - ANTHROPIC_API_KEY
-      - ODOO_URL
-      - ODOO_DB
-      - ODOO_USERNAME
-      - ODOO_PASSWORD
-      - ODOOCLAW_CONFIG=/home/odooclaw/.odooclaw/config.json
-    volumes:
-      - ./data:/home/odooclaw/.odooclaw
-      - ../config/config.json:/home/odooclaw/.odooclaw/config.json
-    entrypoint: [ "odooclaw", "agent" ]
-    stdin_open: true
-    tty: true
-
-  # ─────────────────────────────────────────────
   # OdooClaw Gateway (Long-running Bot)
   # ─────────────────────────────────────────────
   odooclaw-gateway:
@@ -35,6 +11,8 @@ services:
     profiles:
       - gateway
     environment:
+      # 👇 ESTA ES LA LÍNEA MÁGICA QUE FALTA 👇
+      - HOME=/home/odooclaw
       - ANTHROPIC_API_KEY
       - ODOO_URL
       - ODOO_DB
