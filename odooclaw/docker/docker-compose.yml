@@ -7,11 +7,12 @@ services:
       context: ../
       dockerfile: docker/Dockerfile
     container_name: odooclaw-gateway
+    user: "1000:1000"  # 👈 FORZAMOS EL USUARIO NO-ROOT
+    working_dir: /home/odooclaw # 👈 ESTABLECEMOS EL DIRECTORIO DE TRABAJO
     restart: on-failure
     profiles:
       - gateway
     environment:
-      # 👇 ESTA ES LA LÍNEA MÁGICA QUE FALTA 👇
       - HOME=/home/odooclaw
       - ANTHROPIC_API_KEY
       - ODOO_URL
