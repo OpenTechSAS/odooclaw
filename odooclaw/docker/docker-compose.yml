@@ -7,8 +7,8 @@ services:
       context: ../
       dockerfile: docker/Dockerfile
     container_name: odooclaw-gateway
-    user: "1000:1000"  # 👈 FORZAMOS EL USUARIO NO-ROOT
-    working_dir: /home/odooclaw # 👈 ESTABLECEMOS EL DIRECTORIO DE TRABAJO
+    user: "1000:1000"
+    working_dir: /home/odooclaw
     restart: on-failure
     profiles:
       - gateway
@@ -22,5 +22,9 @@ services:
       - ODOOCLAW_CONFIG=/home/odooclaw/.odooclaw/config.json
       - COMPOSE_PROFILES=gateway
     volumes:
-      - ./data:/home/odooclaw/.odooclaw
-      - ../config/config.json:/home/odooclaw/.odooclaw/config.json
+      - odooclaw_data:/home/odooclaw/.odooclaw # 👈 CAMBIADO A VOLUMEN NOMBRADO
+      - ../config/config.json:/home/odooclaw/.odooclaw/config.json:ro
+      
+# 👇 ESTO ES VITAL: DECLARAR EL VOLUMEN 👇
+volumes:
+  odooclaw_data:
