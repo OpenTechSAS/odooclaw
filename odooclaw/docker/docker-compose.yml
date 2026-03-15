@@ -23,6 +23,7 @@ services:
     #  - "host.docker.internal:host-gateway"
     volumes:
       - ./data:/root/.odooclaw
+      - ../config/config.json:/root/.odooclaw/config.json
     entrypoint: [ "odooclaw", "agent" ]
     stdin_open: true
     tty: true
