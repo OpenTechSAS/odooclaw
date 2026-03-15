@@ -3,19 +3,18 @@
     "defaults": {
       "workspace": "/home/odooclaw/.odooclaw/workspace",
       "restrict_to_workspace": true,
-      "provider": "ollama",
-      "model_name": "llama3.2",
+      "provider": "groq",
+      "model_name": "llama-3.2-3b",
       "max_tokens": 1024,
       "max_tool_iterations": 10
     }
   },
   "model_list": [
     {
-      "model_name": "llama3.2",
-      "model": "ollama/llama3.2",
-      "api_base": "http://10.0.0.3:11434/v1",
-      "api_key": "ollama",
-      "request_timeout": 300
+      "model_name": "llama-3.2-3b",
+      "model": "groq/llama-3.2-3b-preview",
+      "api_base": "https://api.groq.com/openai/v1",
+      "api_key": ""
     }
   ],
   "channels": {
