@@ -14,13 +14,22 @@ services:
       - gateway
     environment:
       - HOME=/home/odooclaw
+      - ODOOCLAW_CONFIG=/home/odooclaw/.odooclaw/config.json
+      - ODOOCLAW_AGENTS_DEFAULTS_PROVIDER
+      - ODOOCLAW_AGENTS_DEFAULTS_MODEL_NAME
       - ODOOCLAW_PROVIDERS_ANTHROPIC_API_KEY
+      - ODOOCLAW_PROVIDERS_GROQ_API_KEY
+      - ODOOCLAW_PROVIDERS_OPENAI_API_KEY
+      - ODOOCLAW_PROVIDERS_DEEPSEEK_API_KEY
+      - ODOOCLAW_PROVIDERS_GEMINI_API_KEY
+      - ODOOCLAW_PROVIDERS_OPENROUTER_API_KEY
+      - ODOOCLAW_PROVIDERS_MISTRAL_API_KEY
+      - ODOOCLAW_PROVIDERS_OLLAMA_API_BASE
+      - ODOOCLAW_SKILLS_IN_PROMPT
       - ODOO_URL
       - ODOO_DB
       - ODOO_USERNAME
       - ODOO_PASSWORD
-      - ODOOCLAW_CONFIG=/home/odooclaw/.odooclaw/config.json
-      - COMPOSE_PROFILES=gateway
     volumes:
       - odooclaw_data:/home/odooclaw/.odooclaw # 👈 CAMBIADO A VOLUMEN NOMBRADO
       - ../config/config.json:/home/odooclaw/.odooclaw/config.json:ro

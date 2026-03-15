@@ -72,16 +72,17 @@ RUN chmod +x /usr/local/bin/whisper-stt-mcp.py
 RUN mkdir -p /home/odooclaw/.cache && \
     chown -R odooclaw:odooclaw /home/odooclaw
 
+# Copy entrypoint script
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
 # Switch to non-root user
 USER odooclaw
 WORKDIR /home/odooclaw
-
-# Run onboard to create initial directories and config
-RUN /usr/local/bin/odooclaw onboard
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD curl -f http://localhost:18790/health || exit 1
 
-ENTRYPOINT ["odooclaw"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 CMD ["gateway"]
