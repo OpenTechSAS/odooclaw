@@ -475,12 +475,12 @@ func (p ProvidersConfig) MarshalJSON() ([]byte, error) {
 }
 
 type ProviderConfig struct {
-	APIKey         string `json:"api_key"                   env:"ODOOCLAW_PROVIDERS_{{.Name}}_API_KEY"`
-	APIBase        string `json:"api_base"                  env:"ODOOCLAW_PROVIDERS_{{.Name}}_API_BASE"`
-	Proxy          string `json:"proxy,omitempty"           env:"ODOOCLAW_PROVIDERS_{{.Name}}_PROXY"`
-	RequestTimeout int    `json:"request_timeout,omitempty" env:"ODOOCLAW_PROVIDERS_{{.Name}}_REQUEST_TIMEOUT"`
-	AuthMethod     string `json:"auth_method,omitempty"     env:"ODOOCLAW_PROVIDERS_{{.Name}}_AUTH_METHOD"`
-	ConnectMode    string `json:"connect_mode,omitempty"    env:"ODOOCLAW_PROVIDERS_{{.Name}}_CONNECT_MODE"` // only for Github Copilot, `stdio` or `grpc`
+	APIKey         string `json:"api_key"                   env:"API_KEY"`
+	APIBase        string `json:"api_base"                  env:"API_BASE"`
+	Proxy          string `json:"proxy,omitempty"           env:"PROXY"`
+	RequestTimeout int    `json:"request_timeout,omitempty" env:"REQUEST_TIMEOUT"`
+	AuthMethod     string `json:"auth_method,omitempty"     env:"AUTH_METHOD"`
+	ConnectMode    string `json:"connect_mode,omitempty"    env:"CONNECT_MODE"` // only for Github Copilot, `stdio` or `grpc`
 }
 
 type OpenAIProviderConfig struct {
