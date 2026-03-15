@@ -51,8 +51,11 @@ services:
       - ODOO_DB
       - ODOO_USERNAME
       - ODOO_PASSWORD
+      - ODOOCLAW_MODELS_0_ID
+      - ODOOCLAW_MODELS_0_PROVIDER
     # Uncomment to access host network; leave commented unless needed.
     #extra_hosts:
     #  - "host.docker.internal:host-gateway"
     volumes:
       - ./data:/root/.odooclaw
+      
