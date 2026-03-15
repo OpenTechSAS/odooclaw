@@ -14,7 +14,8 @@
       "model_name": "llama3.2",
       "model": "ollama/llama3.2",
       "api_base": "http://10.0.0.3:11434/v1",
-      "api_key": "ollama"
+      "api_key": "ollama",
+      "request_timeout": 300
     }
   ],
   "channels": {
