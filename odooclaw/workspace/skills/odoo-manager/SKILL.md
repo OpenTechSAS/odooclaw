@@ -614,6 +614,43 @@ The skill should:
 | "Show orders from this month" | `sale.order` | `search_read` + `date_order` filter |
 | "Cancel sale S00010" | `sale.order` | `search` → `action_cancel` |
 | "Total invoiced today" | `account.move` | `search_read` + `move_type=out_invoice` |
+| "Customers pending to invoice / por facturar" | `sale.order` | `search_read` + `invoice_status=to invoice` (see below) |
+| "Last N customers I sold to" | `sale.order` | `search_read` + `state in [sale,done]` ordered by `date_order desc` |
+
+> **CRITICAL — Odoo 18 model names:**
+> - Invoices → `account.move` (NOT `account.invoice` — that model does not exist)
+> - `account.move` requires `move_type` filter: `out_invoice` (customer invoice), `in_invoice` (vendor bill), `out_refund` (credit note)
+> - `account.invoice` is **INVALID** in Odoo 14+. Using it returns null/error.
+
+#### Customers pending to invoice (`invoice_status = 'to invoice'`)
+
+Sales orders that have been confirmed but not yet fully invoiced:
+
+```json
+{
+  "model": "sale.order",
+  "method": "search_read",
+  "args": [[["invoice_status", "=", "to invoice"], ["state", "in", ["sale", "done"]]]],
+  "kwargs": {"fields": ["name", "partner_id", "amount_total", "invoice_status", "date_order"], "limit": 50, "order": "date_order desc"}
+}
+```
+
+`invoice_status` values on `sale.order`:
+- `"to invoice"` — confirmed, pending invoice (what the user means by "por facturar")
+- `"invoiced"` — fully invoiced
+- `"upselling"` — partially invoiced
+- `"nothing"` — nothing to invoice (service/manual)
+
+#### Last N customers sold to
+
+```json
+{
+  "model": "sale.order",
+  "method": "search_read",
+  "args": [[["state", "in", ["sale", "done"]]]],
+  "kwargs": {"fields": ["name", "partner_id", "amount_total", "date_order"], "limit": 5, "order": "date_order desc"}
+}
+```
 
 ### CRM
 
