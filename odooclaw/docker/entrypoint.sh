@@ -112,14 +112,24 @@ WORKSPACE_DIR="${HOME}/.odooclaw/workspace"
 DEFAULT_WORKSPACE="/tmp/odooclaw-default-workspace"
 
 if [ -d "$DEFAULT_WORKSPACE" ]; then
-    # Seed top-level files (AGENTS.md, SOUL.md, etc.) — skip if exist
+    # Always update versioned system files (AGENTS.md, SOUL.md, IDENTITY.md)
+    # These are code-owned and must reflect the latest image.
+    # USER.md is user-owned — skip if exists.
     for f in "$DEFAULT_WORKSPACE"/*.md; do
         [ -f "$f" ] || continue
-        dest="$WORKSPACE_DIR/$(basename "$f")"
-        if [ ! -f "$dest" ]; then
-            mkdir -p "$WORKSPACE_DIR"
+        fname=$(basename "$f")
+        dest="$WORKSPACE_DIR/$fname"
+        mkdir -p "$WORKSPACE_DIR"
+        if [ "$fname" = "USER.md" ]; then
+            # User-owned: only seed if missing
+            if [ ! -f "$dest" ]; then
+                cp "$f" "$dest"
+                echo "[entrypoint] Seeded $fname to workspace"
+            fi
+        else
+            # System-owned: always update
             cp "$f" "$dest"
-            echo "[entrypoint] Seeded $(basename $f) to workspace"
+            echo "[entrypoint] Updated $fname in workspace"
         fi
     done
 
