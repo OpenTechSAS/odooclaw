@@ -91,4 +91,4 @@ if changed:
         print(f'[entrypoint] Config is read-only ({e}), relying on runtime injection', flush=True)
 PYEOF
 
-exec odooclaw gateway "$@"
+exec odooclaw "$@"
