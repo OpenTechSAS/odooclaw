@@ -134,6 +134,22 @@ class OdooSession:
         sender_id: int = None,
         rpc_context: Optional[dict] = None,
     ):
+        # Guard: reject deprecated model names that don't exist in Odoo 14+
+        _DEPRECATED_MODELS = {
+            "account.invoice": "account.move (use move_type='out_invoice' for customer invoices)",
+            "account.invoice.line": "account.move.line (filter by move_id.move_type='out_invoice')",
+        }
+        if model in _DEPRECATED_MODELS:
+            replacement = _DEPRECATED_MODELS[model]
+            return {
+                "isError": True,
+                "content": (
+                    f"ERROR: '{model}' does not exist in Odoo 14+. "
+                    f"Use '{replacement}' instead. "
+                    f"Retry the call with the correct model name."
+                ),
+            }
+
         err = self._ensure_session()
         if err:
             return err
@@ -184,6 +200,15 @@ class OdooSession:
 
             result = data.get("result")
             log(f"call_kw {model}.{method} → {ms}ms")
+            if result is None:
+                return {
+                    "isError": True,
+                    "content": (
+                        f"Odoo returned null for {model}.{method}. "
+                        f"Possible causes: model does not exist, access denied, or wrong domain. "
+                        f"Check model name and domain filters and retry."
+                    ),
+                }
             return {
                 "content": json.dumps(result, ensure_ascii=False, default=str)
                 if isinstance(result, (list, dict))

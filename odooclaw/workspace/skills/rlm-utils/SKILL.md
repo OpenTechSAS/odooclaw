@@ -1,3 +1,8 @@
+---
+name: rlm-utils
+description: Utilities for Recursive Language Models (RLM) strategy — partition large Odoo datasets into chunks and aggregate results from sub-agents to overcome context limits.
+---
+
 # Skill: RLM Utilities (Recursive Language Models)
 
 This skill provides essential tools for implementing the **Recursive Language Models (RLM)** reasoning strategy within OdooClaw. It allows the agent to handle large datasets by partitioning them into smaller, manageable chunks and aggregating results from sub-agents.
