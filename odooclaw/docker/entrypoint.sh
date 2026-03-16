@@ -133,12 +133,12 @@ if [ -d "$DEFAULT_WORKSPACE" ]; then
             if [ -f "$skill_dir/SKILL.md" ]; then
                 cp "$skill_dir/SKILL.md" "$dest_dir/SKILL.md"
             fi
-            # Seed other files only if missing
+            # Seed other files/dirs only if missing
             for f in "$skill_dir"*; do
                 fname=$(basename "$f")
                 [ "$fname" = "SKILL.md" ] && continue
-                [ -f "$dest_dir/$fname" ] && continue
-                cp "$f" "$dest_dir/$fname"
+                [ -e "$dest_dir/$fname" ] && continue
+                cp -r "$f" "$dest_dir/$fname"
             done
         done
         echo "[entrypoint] Workspace skills seeded"
