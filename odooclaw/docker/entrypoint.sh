@@ -79,6 +79,22 @@ for env_key, (protocol, default_base) in providers.items():
                     e['api_key'] = api_key
                     changed = True
 
+# Ensure MCP odoo-manager is configured (may be missing from old onboard-generated configs)
+tools = cfg.setdefault('tools', {})
+mcp = tools.setdefault('mcp', {})
+if not mcp.get('enabled'):
+    mcp['enabled'] = True
+    changed = True
+servers = mcp.setdefault('servers', {})
+if 'odoo-manager' not in servers:
+    servers['odoo-manager'] = {
+        'enabled': True,
+        'command': 'python3',
+        'args': ['/usr/local/bin/odoo-mcp.py'],
+    }
+    changed = True
+    print('[entrypoint] Injected MCP odoo-manager config', flush=True)
+
 if changed:
     cfg['model_list'] = model_list
     # Write only if not read-only
