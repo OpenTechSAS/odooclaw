@@ -76,6 +76,10 @@ RUN mkdir -p /home/odooclaw/.cache && \
 COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+# Copy default workspace files (skills, AGENTS.md, etc.) into image
+# entrypoint.sh will seed these to the volume on first run
+COPY --chown=odooclaw:odooclaw workspace/ /tmp/odooclaw-default-workspace/
+
 # Switch to non-root user
 USER odooclaw
 WORKDIR /home/odooclaw

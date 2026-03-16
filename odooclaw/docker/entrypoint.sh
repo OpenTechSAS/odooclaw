@@ -91,4 +91,42 @@ if changed:
         print(f'[entrypoint] Config is read-only ({e}), relying on runtime injection', flush=True)
 PYEOF
 
+# Seed workspace files from image to volume
+WORKSPACE_DIR="${HOME}/.odooclaw/workspace"
+DEFAULT_WORKSPACE="/tmp/odooclaw-default-workspace"
+
+if [ -d "$DEFAULT_WORKSPACE" ]; then
+    # Seed top-level files (AGENTS.md, SOUL.md, etc.) — skip if exist
+    for f in "$DEFAULT_WORKSPACE"/*.md; do
+        [ -f "$f" ] || continue
+        dest="$WORKSPACE_DIR/$(basename "$f")"
+        if [ ! -f "$dest" ]; then
+            mkdir -p "$WORKSPACE_DIR"
+            cp "$f" "$dest"
+            echo "[entrypoint] Seeded $(basename $f) to workspace"
+        fi
+    done
+
+    # Seed skills — always update SKILL.md (versioned with code), skip server.py if exists
+    if [ -d "$DEFAULT_WORKSPACE/skills" ]; then
+        for skill_dir in "$DEFAULT_WORKSPACE/skills"/*/; do
+            skill_name=$(basename "$skill_dir")
+            dest_dir="$WORKSPACE_DIR/skills/$skill_name"
+            mkdir -p "$dest_dir"
+            # Always update SKILL.md (instructions are versioned)
+            if [ -f "$skill_dir/SKILL.md" ]; then
+                cp "$skill_dir/SKILL.md" "$dest_dir/SKILL.md"
+            fi
+            # Seed other files only if missing
+            for f in "$skill_dir"*; do
+                fname=$(basename "$f")
+                [ "$fname" = "SKILL.md" ] && continue
+                [ -f "$dest_dir/$fname" ] && continue
+                cp "$f" "$dest_dir/$fname"
+            done
+        done
+        echo "[entrypoint] Workspace skills seeded"
+    fi
+fi
+
 exec odooclaw "$@"
