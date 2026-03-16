@@ -94,7 +94,6 @@ func (t *CronTool) Parameters() map[string]any {
 				"description": "Job ID (for remove/enable/disable)",
 			},
 			"deliver": map[string]any{
-				"type":        "boolean",
 				"description": "If true, send message directly to channel. If false, let agent process message (for complex tasks). Default: true",
 			},
 		},
@@ -177,10 +176,13 @@ func (t *CronTool) addJob(args map[string]any) *ToolResult {
 		return ErrorResult("one of at_seconds, every_seconds, or cron_expr is required")
 	}
 
-	// Read deliver parameter, default to true
+	// Read deliver parameter, default to true (coerce string for small models)
 	deliver := true
-	if d, ok := args["deliver"].(bool); ok {
+	switch d := args["deliver"].(type) {
+	case bool:
 		deliver = d
+	case string:
+		deliver = d != "false" && d != "0"
 	}
 
 	command, _ := args["command"].(string)
