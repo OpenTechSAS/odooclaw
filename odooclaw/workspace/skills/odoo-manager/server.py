@@ -201,12 +201,19 @@ class OdooSession:
             result = data.get("result")
             log(f"call_kw {model}.{method} → {ms}ms")
             if result is None:
+                hint = ""
+                if method in ("search_count", "search_read", "search"):
+                    hint = (
+                        " STOP retrying — report this to the user. "
+                        "Likely causes: Odoo credentials are wrong/missing, "
+                        "the Sales/module is not installed, or the user has no access rights."
+                    )
                 return {
                     "isError": True,
                     "content": (
                         f"Odoo returned null for {model}.{method}. "
-                        f"Possible causes: model does not exist, access denied, or wrong domain. "
-                        f"Check model name and domain filters and retry."
+                        f"Possible causes: model does not exist, access denied, or wrong domain."
+                        f"{hint}"
                     ),
                 }
             return {
