@@ -653,7 +653,7 @@ def build_tools():
 
     return [
         {
-            "name": "odoo-manager",
+            "name": "odoo_manager",
             "description": (
                 f"Execute any Odoo 18 ORM operation via JSON-RPC. "
                 f"Supports search, search_read, search_count, read, create, write, unlink "
@@ -921,7 +921,7 @@ def handle_request(request: dict) -> dict | None:
         # Apply try_parse to all tool arguments globally
         tool_args = {k: try_parse(v) for k, v in tool_args.items()}
 
-        if tool_name == "odoo-manager":
+        if tool_name == "odoo_manager":
             model = tool_args.get("model")
             meth = tool_args.get("method")
             args = tool_args.get("args")

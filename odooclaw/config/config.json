@@ -28,7 +28,7 @@
     "mcp": {
       "enabled": true,
       "servers": {
-        "odoo-manager": {
+        "odoo_manager": {
           "enabled": true,
           "command": "python3",
           "args": ["/usr/local/bin/odoo-mcp.py"]

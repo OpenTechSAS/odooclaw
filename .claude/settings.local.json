@@ -3,7 +3,11 @@
     "allow": [
       "Bash(cd:*)",
       "Read(//usr/local/go/bin/**)",
-      "Read(//c/Go/bin/**)"
+      "Read(//c/Go/bin/**)",
+      "Bash(ls:*)",
+      "Bash(git push:*)",
+      "Bash(git add:*)",
+      "Bash(grep:*)"
     ]
   }
 }
